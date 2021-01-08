@@ -19,5 +19,24 @@ All inputs will be valid IPv4 addresses in the form of strings. The last address
 
 
 
-
+### SQL Solutions ###
 select id, last::inet - first::inet as ips_between from ip_addresses
+
+
+### Python Solutions ###
+
+def ips_between(start, end):
+    # TODO
+    strt_lst = start.split('.')
+    end_lst = end.split('.')
+    
+#     strt_lst = strt_lst[::-1]
+#     end_lst = end_lst[::-1]
+    
+    strt_lst = list(map(int, strt_lst))
+    end_lst = list(map(int, end_lst))
+    strt_temp = (strt_lst[0])*256**3 + (strt_lst[1])*256**2 + strt_lst[2]*256 + strt_lst[3]
+    end_temp = (end_lst[0])*256**3 + (end_lst[1])*256**2 + end_lst[2]*256 + end_lst[3]
+    
+    count_ip = end_temp - strt_temp
+    return count_ip
