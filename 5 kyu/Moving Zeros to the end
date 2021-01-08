@@ -1,0 +1,34 @@
+Write an algorithm that takes an array and moves all of the zeros to the end, preserving the order of the other elements.
+
+moveZeros([false,1,0,1,2,0,1,3,"a"]) // returns[false,1,1,2,1,3,"a",0,0]
+
+
+def move_zeros(array):
+#     empty_lst = []
+#     for i in array:
+# #        print(i)
+#         if (i != 0):      
+#             isinstance(empty_lst.append(i), bool)
+#         else:
+#             pass
+#     len_arr = len(array)
+#     len_lst = len(empty_lst)
+    
+#     new_lst = [0]*(len_arr - len_lst)
+    
+#     empty_lst = empty_lst + new_lst
+#     return empty_lst
+
+    empty_lst = []
+    zeros = []
+    
+    for i in range(len(array)):
+        if array[i] == 0 or array[i] == 0.0:
+            if type(array[i]) == int or type(array[i]) == float:
+                zeros.append(array[i])
+            else:
+                empty_lst.append(array[i])
+        else:
+            empty_lst.append(array[i])
+    
+    return empty_lst + zeros
