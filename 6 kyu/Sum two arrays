@@ -1,0 +1,56 @@
+Your task is to create a function called sum_arrays(), which takes two arrays consisting of integers, and returns the sum of those two arrays.
+
+The twist is that (for example) [3,2,9] does not equal 3 + 2 + 9, it would equal '3' + '2' + '9' converted to an integer for this kata, meaning it would equal 329. The output should be an array of the the sum in a similar fashion to the input (for example, if the sum is 341, you would return [3,4,1]). Examples are given below of what two arrays should return.
+
+[3,2,9],[1,2] --> [3,4,1]
+[4,7,3],[1,2,3] --> [5,9,6]
+[1],[5,7,6] --> [5,7,7]
+If both arrays are empty, return an empty array.
+
+In some cases, there will be an array containing a negative number as the first index in the array. In this case treat the whole number as a negative number. See below:
+
+[3,2,6,6],[-7,2,2,8] --> [-3,9,6,2] # 3266 + (-7228) = -3962
+
+
+
+
+import numpy as np
+def sum_arrays(array1,array2):
+    
+#     arr1 = np.array(array1)
+#     arr2 = np.array(array2)
+
+#     if len(arr1) < len(arr2):
+#         temp = arr2.copy()
+#         #temp[:len(arr1)] += arr1
+#         return temp[:len(arr1)], temp, arr1
+#     else:
+#         temp = arr1.copy()
+#         #temp[:len(arr2)] += arr2
+#         return temp[:len(arr2)], temp, arr2
+    
+    if len(array1) != 0 or len(array2) != 0:
+        if len(array1) == 0:
+            lst1 = 0
+        else:
+            lst1 = [str(array) for array in array1]
+            lst1 = "".join(lst1)
+            lst1 = int(lst1)
+        
+        if len(array2) == 0:
+            lst2 = 0
+        else:
+            lst2 = [str(array) for array in array2]
+            lst2 = "".join(lst2)
+            lst2 = int(lst2)
+        
+        total = lst1 + lst2
+        final_op = list(map(int,str(abs(total))))
+        if total < 0:
+            final_op[0] = -final_op[0]
+            return final_op
+        else:
+            return final_op
+    else:
+        final_op = []
+        return final_op
