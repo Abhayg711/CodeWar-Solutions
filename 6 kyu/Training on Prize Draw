@@ -1,0 +1,86 @@
+To participate in a prize draw each one gives his/her firstname.
+
+Each letter of a firstname has a value which is its rank in the English alphabet. A and a have rank 1, B and b rank 2 and so on.
+
+The length of the firstname is added to the sum of these ranks hence a number som.
+
+An array of random weights is linked to the firstnames and each som is multiplied by its corresponding weight to get what they call a winning number.
+
+Example:
+names: "COLIN,AMANDBA,AMANDAB,CAROL,PauL,JOSEPH"
+weights: [1, 4, 4, 5, 2, 1]
+
+PauL -> som = length of firstname + 16 + 1 + 21 + 12 = 4 + 50 -> 54
+The *weight* associated with PauL is 2 so PauL's *winning number* is 54 * 2 = 108.
+Now one can sort the firstnames in decreasing order of the winning numbers. When two people have the same winning number sort them alphabetically by their firstnames.
+
+Task:
+parameters: st a string of firstnames, we an array of weights, n a rank
+
+return: the firstname of the participant whose rank is n (ranks are numbered from 1)
+
+Example:
+names: "COLIN,AMANDBA,AMANDAB,CAROL,PauL,JOSEPH"
+weights: [1, 4, 4, 5, 2, 1]
+n: 4
+
+The function should return: "PauL"
+Notes:
+The weight array is at least as long as the number of names, it may be longer.
+
+If st is empty return "No participants".
+
+If n is greater than the number of participants then return "Not enough participants".
+
+See Examples Test Cases for more examples.
+
+
+
+
+
+
+
+import string
+import operator
+from collections import OrderedDict
+def rank(st, we, n):
+    result, final_dict, sum_dict, len_dict, we_dict, final_op = dict(), dict(), dict(), dict(), dict(), dict()
+    for index, letter in enumerate(string.ascii_lowercase):
+        result[letter] = index + 1
+    total, temp = 0, 0
+    lst_sum, lst_len = [], []
+    init_lst = list(st.split(","))
+    init_lst_new = [x.lower() for x in init_lst]
+    if len(st) == 0:
+        return 'No participants'
+    elif len(init_lst) < n:
+        return 'Not enough participants'
+    else:
+        for i in init_lst_new:
+    #         lst_len.append(len(i))
+            len_dict[i] = len(i)
+            we_dict[i] = we[temp]
+            for j in i:
+                if j in result.keys():
+                    total += result[j] #*6 sum(result[j])
+    #         lst_sum.append(total)
+            sum_dict[i] = total
+            total = 0
+            temp += 1
+        final_dict = {k: sum_dict.get(k, 0) + len_dict.get(k, 0) for k in set(sum_dict) & set(len_dict)}
+        final_dict = {k: final_dict.get(k, 0) * we_dict.get(k, 0) for k in set(final_dict) & set(we_dict)}
+
+        for i in init_lst:
+            final_op[i] = final_dict[i.lower()]
+
+        final_op = {k:v for k, v in sorted(final_op.items(), key = lambda item: item[1], reverse = True)}
+#         final_op = sorted(final_op.items(), key = operator.itemgetter(1), reverse = True)
+#         final_op = OrderedDict(sorted(final_op.items(), key = lambda kv:kv[1], reverse = True))
+#         final_op = OrderedDict(sorted(final_op.items()))
+        final_op_new = sorted(final_op, key = lambda x: (-final_op[x], x))
+        key_lst = list(final_op_new)
+
+    #     final_lst = [x+y for x, y in zip(lst_sum, lst_len)]
+    #     final_lst = [x*y for x, y in zip(final_lst, we)]
+    #     final_lst = sorted(final_lst)
+        return key_lst[n-1]
